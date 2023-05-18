@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Get current info</title>
+  </head>
+  <body>
+    <div class="loader-container">
+      <span class="loader"></span>
+    </div>
+    <div class="main-container">
+      <div class="date-container">
+        <p>Today is <span id="date"></span>.</p>
+      </div>
+      <div class="flex-wrapper"></div>
+      <div class="greetings container highlight">
+        <h1 id="hello"></h1>
+      </div>
+      <div class="weather container">
+        <p>
+          It is
+          <span id="temperature"></span>°C with
+          <span id="description" class="highlight-text"></span> in the
+          <span id="locationType"></span>
+          <span id="location"></span>.
+        </p>
+      </div>
+      <div class="quote container highlight">
+        <p>
+          Enjoy your <span id="time"></span> and remember what
+          <span id="author"></span> said:
+          <span id="quote"></span>
+        </p>
+      </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
