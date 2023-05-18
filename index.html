@@ -12,29 +12,39 @@
       <span class="loader"></span>
     </div>
     <div class="main-container">
-      <div class="date-container">
-        <p>Today is <span id="date"></span>.</p>
-      </div>
-      <div class="flex-wrapper"></div>
-      <div class="greetings container highlight">
-        <h1 id="hello"></h1>
-      </div>
-      <div class="weather container">
-        <p>
-          It is
-          <span id="temperature"></span>°C with
-          <span id="description" class="highlight-text"></span> in the
-          <span id="locationType"></span>
-          <span id="location"></span>.
-        </p>
-      </div>
-      <div class="quote container highlight">
-        <p>
-          Enjoy your <span id="time"></span> and remember what
-          <span id="author"></span> said:
-          <span id="quote"></span>
-        </p>
-      </div>
+      <section class="first">
+        <div class="date-container">
+          <p>Today is <span id="date"></span>.</p>
+        </div>
+        <div class="first-page-content">
+          <div class="greetings">
+            <h1 id="hello" class="type"></h1>
+          </div>
+          <div class="weather">
+            <p>
+              It is
+              <span id="temperature" class="text-pink"></span
+              ><span class="text-pink">°C </span>with
+              <span id="description"></span> in the
+              <span id="locationType"></span>
+              <span id="location"></span>.
+            </p>
+          </div>
+          <div class="enjoy">
+            <p>
+              Enjoy your <span id="time"></span> and remember what
+              <span id="author"></span> said:
+            </p>
+          </div>
+          <div class="quote">
+            <span id="quote"></span>
+          </div>
+        </div>
+      </section>
+      <section class="second">
+        <h1>Lates news</h1>
+        <div id="news-container"></div>
+      </section>
     </div>
 
     <script type="module" src="app.js"></script>

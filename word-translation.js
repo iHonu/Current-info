@@ -1,10 +1,10 @@
 export function getHelloWord(countryCode) {
   const helloWordSmall = translations[countryCode];
   if (helloWordSmall) {
-    const helloWord = helloWordSmall;
+    const helloWord = helloWordSmall + '.';
     return helloWord;
   } else {
-    return 'Hello';
+    return 'Hello.';
   }
 }
 

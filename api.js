@@ -59,6 +59,24 @@ export async function getRandomQuote() {
   }
 }
 
+export async function getNews(countryCode) {
+  try {
+    const newsURL = `https://gnews.io/api/v4/top-headlines?country=${countryCode}&token=97b5d70d080437306ded051f410d743c`;
+    const response = await fetch(newsURL);
+    const data = await response.json();
+    const newsItems = data.articles.map((article) => ({
+      title: article.title,
+      description: article.description,
+      // image: article.image,
+      link: article.url,
+    }));
+    return newsItems;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Unable to get news data');
+  }
+}
+
 //Error: Convert city name to lat and lon
 export async function getGeocodeByCity(city) {
   try {

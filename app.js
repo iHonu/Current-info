@@ -1,7 +1,12 @@
-import { getLocationData, getCurrentWeather } from './api.js';
-import { getRandomQuote } from './api.js';
+import {
+  getLocationData,
+  getCurrentWeather,
+  getRandomQuote,
+  getNews,
+} from './api.js';
 import { date, timeOfTheDay } from './date.js';
 import { getHelloWord } from './word-translation.js';
+import { displayNews } from './news-page.js';
 
 // Get the location of the user
 function getUserLocation() {
@@ -60,7 +65,12 @@ getUserLocation()
     }
   })
   .then((items) => {
+    const getNewsItems = getNews(items.countryCode);
     populatePage(items);
+    return getNewsItems;
+  })
+  .then((newsItems) => {
+    displayNews(newsItems);
   })
   .catch((error) => {
     console.log(error);
@@ -77,5 +87,5 @@ function populatePage(items) {
   document.querySelector('.loader-container').style.display = 'none';
   // Show the main container
   const mainContainer = document.querySelector('.main-container');
-  mainContainer.style.display = 'flex';
+  mainContainer.style.display = 'block';
 }
