@@ -3,6 +3,7 @@ import {
   getCurrentWeather,
   getRandomQuote,
   getNews,
+  getGeocodeByCity,
 } from './api.js';
 import { date, timeOfTheDay } from './date.js';
 import { getHelloWord } from './word-translation.js';
