@@ -3,79 +3,81 @@ import {
   getCurrentWeather,
   getRandomQuote,
   getNews,
-  getGeocodeByCity,
 } from './api.js';
 import { date, timeOfTheDay } from './date.js';
 import { getHelloWord } from './word-translation.js';
-import { displayNews } from './news-page.js';
+import { displayNews } from './view//news-page.js';
+import { getCityFromInput } from './view/city-input.js';
 
 // Get the location of the user
+
 function getUserLocation() {
   return new Promise((resolve, reject) => {
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        resolve({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      }, reject);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          });
+        },
+        (error) => {
+          reject(error);
+        },
+      );
     } else {
       reject('Geolocation is not supported by this browser.');
     }
   });
 }
 
-getUserLocation()
-  .then(async ({ lat, lon }) => {
-    try {
-      const { location, locationType, flag, countryCode } =
-        await getLocationData(lat, lon);
-      const [{ temperature, description }, { author, quote }, helloWord] =
-        await Promise.all([
-          getCurrentWeather(lat, lon),
-          getRandomQuote(),
-          getHelloWord(countryCode),
-        ]);
+// Execute the code after obtaining the location
+async function executeCode(lat, lon) {
+  try {
+    const { location, locationType, countryCode } = await getLocationData(
+      lat,
+      lon,
+    );
+    const [{ temperature, description }, { author, quote }, helloWord] =
+      await Promise.all([
+        getCurrentWeather(lat, lon),
+        getRandomQuote(),
+        getHelloWord(countryCode),
+      ]);
 
-      return {
-        hello: helloWord,
-        location: location,
-        locationType: locationType,
-        flag: flag,
-        temperature: temperature,
-        description: description,
-        countryCode: countryCode,
-        author: author,
-        quote: quote,
-        date: date,
-        time: timeOfTheDay,
-      };
-    } catch (error) {
-      console.log(error);
-      return {
-        hello: 'Hello',
-        location: 'Earth',
-        locationType: 'country',
-        flag: '🌍',
-        temperature: '0',
-        description: 'nothing',
-        countryCode: 'en',
-        author: 'Uncle Ben',
-        quote: 'With great power comes great responsibility.',
-      };
-    }
-  })
-  .then((items) => {
-    const getNewsItems = getNews(items.countryCode);
+    const items = {
+      hello: helloWord,
+      location: location,
+      locationType: locationType,
+      temperature: temperature,
+      description: description,
+      countryCode: countryCode,
+      author: author,
+      quote: quote,
+      date: date,
+      time: timeOfTheDay,
+    };
+
+    const newsItems = await getNews(items.countryCode);
     populatePage(items);
-    return getNewsItems;
-  })
-  .then((newsItems) => {
     displayNews(newsItems);
-  })
-  .catch((error) => {
+  } catch (error) {
     console.log(error);
-  });
+    const items = {
+      hello: 'Hello',
+      location: 'Earth',
+      locationType: 'country',
+      temperature: '0',
+      description: 'nothing',
+      countryCode: 'en',
+      author: 'Uncle Ben',
+      quote: 'With great power comes great responsibility.',
+      date: date,
+      time: timeOfTheDay,
+    };
+    populatePage(items);
+  }
+}
 
 function populatePage(items) {
   Object.keys(items).forEach((item) => {
@@ -90,3 +92,24 @@ function populatePage(items) {
   const mainContainer = document.querySelector('.main-container');
   mainContainer.style.display = 'block';
 }
+
+function handleGeolocationError(error) {
+  if (error.code === 1) {
+    getCityFromInput()
+      .then(({ lat, lon }) => {
+        executeCode(lat, lon);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}
+
+// Get the user's location
+getUserLocation()
+  .then(({ lat, lon }) => {
+    executeCode(lat, lon);
+  })
+  .catch((error) => {
+    handleGeolocationError(error);
+  });

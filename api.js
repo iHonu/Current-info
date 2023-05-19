@@ -11,13 +11,11 @@ export async function getLocationData(lat, lon) {
     const locationKey = keys.find((key) => components[key]);
 
     const locationName = components[locationKey];
-    const countryFlag = data.results[0].annotations.flag;
     const countryCode = components.country_code;
 
     return {
       location: locationName,
       locationType: locationKey,
-      flag: countryFlag,
       countryCode: countryCode,
     };
   } catch (error) {
