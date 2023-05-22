@@ -7,12 +7,22 @@ export function getCityFromInput() {
   const errorText = document.getElementById('error-text');
   const errorContainer = document.querySelector('.error-container');
 
-  //hide loader
-  loader.style.display = 'none';
-  cityInput.style.display = 'block';
-  cityBtn.style.display = 'block';
-  errorText.style.display = 'block';
-  errorContainer.style.display = 'flex';
+  const hideLoader = () => {
+    loader.style.display = 'none';
+    cityInput.style.display = 'block';
+    cityBtn.style.display = 'block';
+    errorText.style.display = 'block';
+    errorContainer.style.display = 'flex';
+  };
+  const showLoader = () => {
+    loader.style.display = 'flex';
+    cityInput.style.display = 'none';
+    cityBtn.style.display = 'none';
+    errorText.style.display = 'none';
+    errorContainer.style.display = 'none';
+  };
+
+  hideLoader();
 
   return new Promise((resolve, reject) => {
     cityBtn.addEventListener('click', async () => {
@@ -21,26 +31,15 @@ export function getCityFromInput() {
         errorText.innerHTML = 'Please enter a city name.';
         return;
       } else {
-        // Show loader
-        loader.style.display = 'flex';
-        cityInput.style.display = 'none';
-        cityBtn.style.display = 'none';
-        errorText.style.display = 'none';
-        errorContainer.style.display = 'none';
-
+        showLoader();
         try {
           const { lat, lon } = await getGeocodeByCity(city);
           resolve({ lat, lon });
           console.log('llllll9898');
         } catch (error) {
           console.log(error);
-          //hide loader
           cityInput.value = '';
-          cityInput.style.display = 'block';
-          cityBtn.style.display = 'block';
-          loader.style.display = 'none';
-          errorText.style.display = 'block';
-          errorContainer.style.display = 'flex';
+          hideLoader();
           errorText.innerHTML = 'City not found.';
           reject('City not found.');
         }

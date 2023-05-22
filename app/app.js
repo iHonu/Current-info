@@ -9,6 +9,38 @@ import { getHelloWord } from './word-translation.js';
 import { displayNews } from '../view//news-page.js';
 import { getCityFromInput } from '../view/city-input.js';
 
+// Find a way to get the location of the user
+getUserLocation()
+  .then(({ lat, lon }) => {
+    executeCode(lat, lon);
+  })
+  .catch((error) => {
+    handleGeolocationError(error);
+  });
+
+async function handleGeolocationError(error) {
+  if (error.code === 1) {
+    try {
+      const { lat, lon } = await getCityInputRepeatedly();
+      executeCode(lat, lon);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+// Get the city input from the user
+async function getCityInputRepeatedly() {
+  try {
+    const { lat, lon } = await getCityFromInput();
+    return { lat, lon };
+  } catch (error) {
+    console.log(error);
+    // if the city was not found or any other error occurred, we try again
+    return getCityInputRepeatedly();
+  }
+}
+
 // Get the location of the user if everything is ok
 function getUserLocation() {
   return new Promise((resolve, reject) => {
@@ -92,25 +124,3 @@ function populatePage(items) {
   const mainContainer = document.querySelector('.main-container');
   mainContainer.style.display = 'block';
 }
-
-// Handle the error when the user doesn't allow the location
-function handleGeolocationError(error) {
-  if (error.code === 1) {
-    getCityFromInput()
-      .then(({ lat, lon }) => {
-        executeCode(lat, lon);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-}
-
-// Find a way to get the location of the user
-getUserLocation()
-  .then(({ lat, lon }) => {
-    executeCode(lat, lon);
-  })
-  .catch((error) => {
-    handleGeolocationError(error);
-  });
