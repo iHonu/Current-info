@@ -2,11 +2,11 @@
 
 [DEMO](https://ihonu.github.io/API-Project/)
 
-![Screenshot](/screenshots/Desktop.svg)
-
 This project demonstrates the capabilities of asynchronous code and APIs to provide users with personalized information. The website begins by fetching location data and utilizes various APIs to deliver a tailored experience. By utilizing the user's location, it offers real-time weather updates, details about the user's city, country information, and current date and time.
 
 In the event that users deny access to their location, the website offers an alternative solution. Users can manually input their city name, and the application seamlessly converts it to latitude and longitude coordinates, ensuring a smooth continuation of the functionality.
+
+![Screenshot](/screenshots/Desktop.svg)
 
 ## APIs used
 
