@@ -56,7 +56,7 @@ export async function getRandomQuote() {
     throw new Error('Unable to get quote data');
   }
 }
-
+//New API
 export async function getNews(countryCode) {
   try {
     const newsURL = `https://gnews.io/api/v4/top-headlines?country=${countryCode}&token=97b5d70d080437306ded051f410d743c`;

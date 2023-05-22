@@ -7,6 +7,7 @@ export function getCityFromInput() {
   const errorText = document.getElementById('error-text');
   const errorContainer = document.querySelector('.error-container');
 
+  //hide loader
   loader.style.display = 'none';
   cityInput.style.display = 'block';
   cityBtn.style.display = 'block';
@@ -20,6 +21,7 @@ export function getCityFromInput() {
         errorText.innerHTML = 'Please enter a city name.';
         return;
       } else {
+        // Show loader
         loader.style.display = 'flex';
         cityInput.style.display = 'none';
         cityBtn.style.display = 'none';
@@ -29,8 +31,10 @@ export function getCityFromInput() {
         try {
           const { lat, lon } = await getGeocodeByCity(city);
           resolve({ lat, lon });
+          console.log('llllll9898');
         } catch (error) {
           console.log(error);
+          //hide loader
           cityInput.value = '';
           cityInput.style.display = 'block';
           cityBtn.style.display = 'block';

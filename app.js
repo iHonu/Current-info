@@ -9,8 +9,7 @@ import { getHelloWord } from './word-translation.js';
 import { displayNews } from './view//news-page.js';
 import { getCityFromInput } from './view/city-input.js';
 
-// Get the location of the user
-
+// Get the location of the user if everything is ok
 function getUserLocation() {
   return new Promise((resolve, reject) => {
     if ('geolocation' in navigator) {
@@ -31,7 +30,7 @@ function getUserLocation() {
   });
 }
 
-// Execute the code after obtaining the location
+// Execute the code after getting the location
 async function executeCode(lat, lon) {
   try {
     const { location, locationType, countryCode } = await getLocationData(
@@ -79,6 +78,7 @@ async function executeCode(lat, lon) {
   }
 }
 
+// Populate the page with the data
 function populatePage(items) {
   Object.keys(items).forEach((item) => {
     const element = document.getElementById(item);
@@ -93,6 +93,7 @@ function populatePage(items) {
   mainContainer.style.display = 'block';
 }
 
+// Handle the error when the user doesn't allow the location
 function handleGeolocationError(error) {
   if (error.code === 1) {
     getCityFromInput()
@@ -105,7 +106,7 @@ function handleGeolocationError(error) {
   }
 }
 
-// Get the user's location
+// Find a way to get the location of the user
 getUserLocation()
   .then(({ lat, lon }) => {
     executeCode(lat, lon);
