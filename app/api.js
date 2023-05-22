@@ -27,7 +27,7 @@ export async function getLocationData(lat, lon) {
 // Use weather API
 export async function getCurrentWeather(lat, lon) {
   try {
-    const weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=0090cc931da4498541f43037147ec092&units=metric`;
+    const weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=0090cc931da4498541f43037147ec092&units=metric`;
     const response = await fetch(weatherURL);
     const data = await response.json();
 
