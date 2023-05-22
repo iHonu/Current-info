@@ -6,8 +6,8 @@ import {
 } from './api.js';
 import { date, timeOfTheDay } from './date.js';
 import { getHelloWord } from './word-translation.js';
-import { displayNews } from './view//news-page.js';
-import { getCityFromInput } from './view/city-input.js';
+import { displayNews } from '/view//news-page.js';
+import { getCityFromInput } from '/view/city-input.js';
 
 // Get the location of the user if everything is ok
 function getUserLocation() {

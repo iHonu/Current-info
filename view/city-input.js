@@ -1,4 +1,4 @@
-import { getGeocodeByCity } from '../api.js';
+import { getGeocodeByCity } from '/app/api.js';
 
 export function getCityFromInput() {
   const loader = document.querySelector('.loader');
