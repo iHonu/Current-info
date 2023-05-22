@@ -6,7 +6,7 @@ This project demonstrates the capabilities of asynchronous code and APIs to prov
 
 In the event that users deny access to their location, the website offers an alternative solution. Users can manually input their city name, and the application seamlessly converts it to latitude and longitude coordinates, ensuring a smooth continuation of the functionality.
 
-![Screenshot](/screenshots/Desktop.svg)
+![Screenshot](img/screenshots/Desktop.svg)
 
 ## APIs used
 
