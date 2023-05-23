@@ -35,7 +35,6 @@ export function getCityFromInput() {
         try {
           const { lat, lon } = await getGeocodeByCity(city);
           resolve({ lat, lon });
-          console.log('llllll9898');
         } catch (error) {
           console.log(error);
           cityInput.value = '';

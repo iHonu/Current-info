@@ -56,6 +56,7 @@ export async function getRandomQuote() {
     throw new Error('Unable to get quote data');
   }
 }
+
 //New API
 export async function getNews(countryCode) {
   try {
@@ -65,7 +66,6 @@ export async function getNews(countryCode) {
     const newsItems = data.articles.map((article) => ({
       title: article.title,
       description: article.description,
-      // image: article.image,
       link: article.url,
     }));
     return newsItems;

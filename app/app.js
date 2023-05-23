@@ -9,19 +9,18 @@ import { getHelloWord } from './word-translation.js';
 import { displayNews } from '../view//news-page.js';
 import { getCityFromInput } from '../view/city-input.js';
 
-// Find a way to get the location of the user
 getUserLocation()
   .then(({ lat, lon }) => {
     executeCode(lat, lon);
   })
   .catch((error) => {
-    handleGeolocationError(error);
+    getGeolocationManually(error);
   });
 
-async function handleGeolocationError(error) {
+async function getGeolocationManually(error) {
   if (error.code === 1) {
     try {
-      const { lat, lon } = await getCityInputRepeatedly();
+      const { lat, lon } = await askUserLocation();
       executeCode(lat, lon);
     } catch (error) {
       console.log(error);
@@ -29,19 +28,17 @@ async function handleGeolocationError(error) {
   }
 }
 
-// Get the city input from the user
-async function getCityInputRepeatedly() {
+async function askUserLocation() {
   try {
     const { lat, lon } = await getCityFromInput();
     return { lat, lon };
   } catch (error) {
     console.log(error);
-    // if the city was not found or any other error occurred, we try again
-    return getCityInputRepeatedly();
+    // if the city was not found or any other error try again
+    return askUserLocation();
   }
 }
 
-// Get the location of the user if everything is ok
 function getUserLocation() {
   return new Promise((resolve, reject) => {
     if ('geolocation' in navigator) {
@@ -62,7 +59,6 @@ function getUserLocation() {
   });
 }
 
-// Execute the code after getting the location
 async function executeCode(lat, lon) {
   try {
     const { location, locationType, countryCode } = await getLocationData(
@@ -110,7 +106,6 @@ async function executeCode(lat, lon) {
   }
 }
 
-// Populate the page with the data
 function populatePage(items) {
   Object.keys(items).forEach((item) => {
     const element = document.getElementById(item);
@@ -120,7 +115,7 @@ function populatePage(items) {
   });
 
   document.querySelector('.loader-container').style.display = 'none';
-  // Show the main container
+
   const mainContainer = document.querySelector('.main-container');
   mainContainer.style.display = 'block';
 }
